@@ -19,6 +19,8 @@ y_apos = int(yesterday['tests_antigen_positive'] - day1['tests_antigen_positive'
 pcrpos_rate = round((y_pcrpos/y_pcrtests)*100, 2) #Positivity rate in PCR Tests or other approved nucleic acid amplification test (NAAT).
 apos_rate = round((y_apos/y_atests)*100, 2) #Positivity rate in Antigen Tests.
 
+#Source for how to calculate positivity rate: https://www.coronavirus.in.gov/map/positive-test-rate.pdf
+
 print('Stats for the last seven days:\n')
 
 print('PCR Tests: ' + str(y_pcrtests)) #Weekly completed PCR Tests or other approved nucleic acid amplification test (NAAT).
