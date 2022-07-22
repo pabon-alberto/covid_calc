@@ -1,4 +1,6 @@
+import time
 import pandas as pd
+
 
 url = 'https://raw.githubusercontent.com/govex/COVID-19/master/data_tables/testing_data/time_series_covid19_US.csv'
 jh_df = pd.read_csv(url, index_col = 0)
@@ -25,11 +27,12 @@ pcrpos_rate = round((y_pcrpos/y_pcrtests)*100, 2)
 #Positivity rate in Antigen Tests.
 apos_rate = round((y_apos/y_atests)*100, 2)
 
+avg_rate = str((pcrpos_rate+apos_rate)/2)
 
 #Source for how to calculate positivity rate:
 #https://www.coronavirus.in.gov/map/positive-test-rate.pdf
 
-print('Stats for the last seven days:\n')
+print('\nStats for the last seven days:\n')
 #Weekly completed PCR Tests or other approved nucleic acid amplification test (NAAT).
 print('PCR Tests: ' + str(y_pcrtests))
 #Weekly PCR Tests or other approved nucleic acid amplification test (NAAT) that resulted positive.
@@ -43,3 +46,5 @@ print('Antigen Tests: ' + str(y_atests))
 print('Antigen Tests Resulted Positive: ' + str(y_apos))
 #Positivity rate in Antigen Tests.
 print('Positivity Rate with Antigen Tests: ' + str(apos_rate) + '%\n')
+#Average Positivity Rate
+print('\nAverage Positivity rate: ' + avg_rate + '%\n')
