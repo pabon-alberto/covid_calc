@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib as mpl
 
 url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv'
 ny_df = pd.read_csv(url, index_col = 0)
@@ -23,10 +24,18 @@ wdeaths = day_7['deaths'] - day_1['deaths']
 # print('Deaths yesterday: ' + str(ddeaths) + '\n\n' + 'Remember that that the total number of cases can only be found when the day is over.\nThis is why there are no stats for the current day.')
 
 c_array = []
-for i in range(6):
-    c_array.append(ny_df[ny_df['state'].str.contains('Puerto Rico')].tail(7).iloc[i].cases)
-    
+pr_len = len(ny_df[ny_df['state'].str.contains('Puerto Rico')].cases) #The total amount of entries recorded in Puerto Rico. 
+for i in range(29, -1, -1): #Entering the entries in the past week to the x-axis. Change first parameter to 29 to find entries for the past month. Change first parameter to pr_len for all-time data.
+    c_array.append(ny_df[ny_df['state'].str.contains('Puerto Rico')].tail(30).iloc[i].cases) #Change .tail(...) to the amount of entries the graph will consider.
 
-plt.plot(c_array)
+fig, ax = plt.subplots()
+
+ax.plot(c_array)
+ax.ticklabel_format(useOffset=False, style='plain') #Removing scientific notaion to y-axis values.
+ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}')) #Add commas to y-axis values for readability.
+ax.invert_xaxis() #To organize the data for display.
+
 plt.ylabel('Cases')
+plt.xlabel('Days before Yesterday')
+plt.title('Total Amount of Cases since Start of Pandemic')
 plt.show()
