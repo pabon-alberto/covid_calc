@@ -1,9 +1,9 @@
-import pandas as pd
+from pandas import read_csv
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 url = 'https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv'
-ny_df = pd.read_csv(url, index_col = 0)
+ny_df = read_csv(url, index_col = 0, engine = 'pyarrow')
 
 day_1 = ny_df[ny_df['state'].str.contains('Puerto Rico')].tail(7).iloc[0] #Cases seven days ago
 day_6 = ny_df[ny_df['state'].str.contains('Puerto Rico')].tail(7).iloc[5] #Cases day before yesterday
@@ -31,7 +31,7 @@ for i in range(29, -1, -1): #Entering the entries in the past week to the x-axis
 fig, ax = plt.subplots()
 
 ax.plot(c_array)
-ax.ticklabel_format(useOffset=False, style='plain') #Removing scientific notaion to y-axis values.
+
 ax.yaxis.set_major_formatter(mpl.ticker.StrMethodFormatter('{x:,.0f}')) #Add commas to y-axis values for readability.
 ax.invert_xaxis() #To organize the data for display.
 
